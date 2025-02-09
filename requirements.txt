@@ -3,4 +3,5 @@ pandas==2.2.3
 plotly==5.24.1
 pytest==8.3.4
 streamlit==1.41.1
+streamlit-tree-select==0.0.5
 xlrd==2.0.1
