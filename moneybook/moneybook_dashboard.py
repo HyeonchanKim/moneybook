@@ -24,6 +24,7 @@ def main():
     st.sidebar.header("필터링 옵션")
 
     df[Headers.DATE] = pd.to_datetime(df[Headers.DATE], format="%Y년%m월%d일")
+    df[Headers.SPENT] = df[Headers.CARD] + df[Headers.CASH]
 
     # 날짜 범위 필터링
     selected_date = st.sidebar.date_input(
@@ -57,19 +58,19 @@ def main():
     filtered_df = filtered_df[filtered_df[Headers.CATEGORY].isin(selected["checked"])]
 
     # 그래프 그림
-    date_cash_df = filtered_df.groupby(Headers.DATE)[Headers.CASH].sum().reset_index()
+    date_cash_df = filtered_df.groupby(Headers.DATE)[Headers.SPENT].sum().reset_index()
     date_cash_chart = px.bar(
-        date_cash_df, x=Headers.DATE, y=Headers.CASH, title="날짜별 지출 금액", labels={Headers.CASH: "원", Headers.DATE: "날짜"}
+        date_cash_df, x=Headers.DATE, y=Headers.SPENT, title="날짜별 지출 금액", labels={Headers.SPENT: "원", Headers.DATE: "날짜"}
     )
     st.plotly_chart(date_cash_chart, use_container_width=True)
 
-    date_cumulative_cash_df = filtered_df.groupby(Headers.DATE)[Headers.CASH].sum().cumsum().reset_index()
+    date_cumulative_cash_df = filtered_df.groupby(Headers.DATE)[Headers.SPENT].sum().cumsum().reset_index()
     date_cash_cumulative_chart = px.line(
         date_cumulative_cash_df,
         x=Headers.DATE,
-        y=Headers.CASH,
+        y=Headers.SPENT,
         title="날짜별 지출 금액",
-        labels={Headers.CASH: "원", Headers.DATE: "날짜"},
+        labels={Headers.SPENT: "원", Headers.DATE: "날짜"},
     )
     st.plotly_chart(date_cash_cumulative_chart, use_container_width=True)
 

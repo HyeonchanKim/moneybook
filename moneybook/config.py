@@ -23,3 +23,4 @@ class Headers(StrEnum):
 
     CATEGORY_L = "대분류"
     CATEGORY_S = "소분류"
+    SPENT = "소비금액"
