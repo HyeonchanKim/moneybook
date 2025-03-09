@@ -50,6 +50,8 @@ def filter_data(df: pd.DataFrame) -> pd.DataFrame:
     st.sidebar.header("필터링 옵션")
 
     df = filter_by_date(df)
+    df = filter_by_detail(df)
+    df = filter_by_category(df)
 
     return df
 
